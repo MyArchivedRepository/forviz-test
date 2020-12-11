@@ -1,0 +1,27 @@
+  console.log(bookingdata[0].startTime);
+  console.log(bookingdata[0].endTime);
+
+  const b = new Date("2020-11-25");
+
+  console.log(new Date(bookingdata[0].endTime) < b);
+  console.log(new Date("2019-09-28 14:00:00"))
+
+  console.log(Date.parse("2019-09-28 14:00:00"))
+  console.log(Date.parse(bookingdata[0].endTime))
+
+  const checkAvailability = (roomId, startTime, endTime) => {
+    var answer = "";
+    const room = roomId;
+    const inputStartTime = Date.parse(startTime);
+    const inputEndTime = Date.parse(endTime);
+    console.log(inputEndTime)
+
+    if (inputEndTime == Date.parse(bookingdata[0].endTime)) {
+      answer = "xxx";
+    } else {
+      answer = "yyy";
+    }
+
+    return console.log(answer); //true / false;
+  };
+  checkAvailability('A101', '2019-09-28 13:00:00', "2019-09-28 14:00:00");

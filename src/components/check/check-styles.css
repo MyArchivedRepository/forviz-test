@@ -1,0 +1,16 @@
+.date{
+    height: 50px;
+    border-radius: 5px;
+}
+.booked{
+    color: orange;
+}
+.avail{
+    color: green;
+}
+.warn{
+    color: red;
+}
+.submit{
+    width: 100%;
+}
