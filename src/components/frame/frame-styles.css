@@ -1,0 +1,29 @@
+h2{
+    margin-top: 50px;
+}
+
+.a, .b{
+    box-sizing: border-box;
+    margin: auto;
+    padding: 4px 4%;
+    display: flex;
+    flex-flow: row wrap;
+    flex: 0 0 auto;
+    width: 100%;
+
+}
+
+.b{
+    justify-content: space-between;
+}
+
+.block{
+    display: flex;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 2px 2px;
+}
+
+.image{
+    height: 150px;
+}
