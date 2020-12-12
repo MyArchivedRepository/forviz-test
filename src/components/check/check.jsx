@@ -47,7 +47,7 @@ const CheckAvailability = (props) => {
   return (
     <div className="container">
       <h1>AVAILABILITY CHECK</h1>
-      <form onSubmit={submitOnClick}>
+      <form onSubmit={submitOnClick} target='_blank'>
         <div className="dropdown-group">
           <div className="dropdown">
             <h2>SELECT ROOM</h2>
@@ -57,6 +57,7 @@ const CheckAvailability = (props) => {
               onChange={pushValue}
               required
             >
+              <option ></option>
               <option value="A101">A101</option>
               <option value="A102">A102</option>
               <option value="Auditorium">Auditorium</option>
@@ -97,7 +98,7 @@ const CheckAvailability = (props) => {
         <h1 className="booked">Booked!</h1>
       ) : Date.parse(arg.startTime) >= Date.parse(arg.endTime) ? (
         <h1 className="warn">Please choose the correct time</h1>
-      ) : (
+      ) : arg.roomId === '' ? <h1 className="warn">Please select room</h1>:(
         <h1 className="avail">Available</h1>
       )}
     </div>
