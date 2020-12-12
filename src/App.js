@@ -1,15 +1,17 @@
 import React from "react";
+import {Route,Switch} from 'react-router-dom'
 import "./App.css";
-import BookingData from "./assets/current-bookings";
-import CheckAvailability from "./components/check/check";
-import GetBookingsForWeek from "./components/getbookings/getbookings";
+import Bookings from './components/pages/bookings/bookings'
+import Home from './components/pages/home/home'
 
 
 function App() {
   return (
     <div className="App">
-      <CheckAvailability BookingData={BookingData} />
-      <GetBookingsForWeek BookingData={BookingData} />
+      <Switch>
+      <Route exact={true} path="/" component={Home} />
+      <Route exact={true} path="/bookings" component={Bookings} />
+      </Switch>
     </div>
   );
 }

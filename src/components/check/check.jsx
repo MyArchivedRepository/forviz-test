@@ -29,7 +29,8 @@ const CheckAvailability = (props) => {
         ((Date.parse(time.startTime) <= newStartTime) &
           (Date.parse(time.endTime) > newStartTime)) |
         ((Date.parse(time.startTime) < newEndTime) &
-          (Date.parse(time.endTime) > newEndTime))
+          (Date.parse(time.endTime) > newEndTime)) |
+          ((Date.parse(time.startTime) >= newStartTime)&(newEndTime > Date.parse(time.endTime)))
       );
     });
     setIsBooked(forCheck.length !== 0);
@@ -38,18 +39,15 @@ const CheckAvailability = (props) => {
 
   const submitOnClick = (event) => {
     checkAvailability(arg.roomId, arg.startTime, arg.endTime);
-    setArg({
-      roomId: arg.roomId,
-      startTime: "",
-      endTime: "",
-    });
+    setArg({ ...arg});
     event.preventDefault();
   };
-
+  console.log(arg)
+  console.log(isBooked)
   return (
     <div className="container">
       <h1>AVAILABILITY CHECK</h1>
-      <form>
+      <form onSubmit={submitOnClick}>
         <div className="dropdown-group">
           <div className="dropdown">
             <h2>SELECT ROOM</h2>
@@ -89,15 +87,15 @@ const CheckAvailability = (props) => {
           <br></br>
           <input
             className="submit"
-            type="button"
+            type="submit"
             value="Submit"
-            onClick={submitOnClick}
+
           ></input>
         </div>
       </form>
       {isBooked === null ? null : isBooked === true ? (
         <h1 className="booked">Booked!</h1>
-      ) : arg.startTime === "" ? (
+      ) : Date.parse(arg.startTime) >= Date.parse(arg.endTime) ? (
         <h1 className="warn">Please choose the correct time</h1>
       ) : (
         <h1 className="avail">Available</h1>
