@@ -1,0 +1,115 @@
+.dashboard{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    height: 100vh;
+    overflow: auto;
+}
+.upcoming{
+    width: 40%;
+    color: #FFFFFF;    
+}
+.upcoming-header{    
+    background-color: #191D32;
+    height: 70%;    
+}
+.upcoming-roomid{
+    display: flex;
+    flex-direction: row;    
+    margin-left: 12%;
+    padding-left: 10%;
+    background-color: #BA2C73;
+    height: 75px;
+}
+.upcoming-content{
+    justify-content: left;
+    text-align: left;
+    padding-left: 12%;
+    padding-bottom:50px;
+    position: relative;
+}
+.upcoming-content h1{
+    font-weight: 100;
+    font-size: 200%;
+    line-height: 0.5;
+}
+.upcoming-label{
+    font-size: 2vh;
+    padding: 20% 0 10%;
+}
+.upcoming-detail{
+    display:flex;
+    justify-content: left;
+    text-align: left;
+    height: 30%;
+    padding-left: 12%;
+    background-color: #282F44    
+}
+.wrapper{
+    display:inline-flex;
+    position: relative;
+    top: -12vh;
+}
+p{
+    font-size: 2vh;
+}
+h3{
+    font-size: 2.5vh;
+    font-weight: 400;
+    line-height: .5;
+}
+.bookings{
+    width: 60%;
+}
+.period-tab{
+    display: flex;
+    position: relative;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    background-color: #75B8C8;
+    align-items: flex-end;
+    height: 75px;
+    padding: 0 50% 0 10%;
+}
+a{
+    text-decoration: none;
+    color: grey;
+    bottom: 2vh;    
+}
+.period-button{
+    position: relative;    
+    display: flex;
+    text-align: center;
+    width: 5vw;    
+    padding-bottom: 3vh;
+    margin: auto;
+}
+.period-button p {    
+    position: absolute;
+    width: 15vw;
+    bottom: 2vh;
+    margin: auto;
+    left: -100%;    
+    font-size: 2vh;    
+}
+.barrier{
+    height: 5vh;    
+}
+.detail-container{
+    display: flex;
+    flex-flow: column wrap;
+    justify-self: start;
+    text-align: left;
+}
+.bookingwholemonth{
+    display: flex;
+    flex-flow: column wrap;
+    text-align: left;
+}
+.wmbooking-wrapper{
+    padding-left: 10%;
+}
+.selected{
+    border-bottom: 3px solid  #BA2C73;
+    color: black;    
+}

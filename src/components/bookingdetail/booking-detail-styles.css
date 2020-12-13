@@ -1,0 +1,11 @@
+.booking-detail{
+    padding: .75vh 0;
+}
+.booking-comp{
+    padding-left: 10% ;
+
+}
+.only-booking , .wholemonth{
+    padding-left: 6%;
+    border-left: 2px solid #BA2C73;
+}

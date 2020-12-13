@@ -1,0 +1,16 @@
+.bookings{
+    box-sizing: border-box;
+}
+.datetitle{
+    background-color: #75B8C8;
+    height: 20px;
+    padding-left: 15%;
+    line-height: 1;
+}
+.datetitle h3{
+    line-height: 20px;
+}
+.longday{
+    opacity: 0.5;
+}
+

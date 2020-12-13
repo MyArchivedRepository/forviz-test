@@ -1,0 +1,13 @@
+.linktobookings{
+    padding:2vh;
+    font-size: 5vh;
+    border: 1px solid black;
+    width: 25%;
+    margin: 25px auto 0;
+    border-radius: 10px;
+    color: black;
+}
+.linktobookings:hover{
+    cursor: pointer;
+    background-color: skyblue;
+}

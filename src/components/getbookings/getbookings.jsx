@@ -1,67 +1,73 @@
 import React, { useState } from "react";
-
 import "./getbookings-styles.css";
-
 const GetBookingsForWeek = (props) => {
-  const [bookings, setBookings] = useState();
   const [arg, setArg] = useState({
     roomId: "",
     period: "",
   });
-
+  const bookings = props.BookingData;
+  const today = new Date("2020-09-28");
+  const curr = new Date("2020-09-28");
+  const first = curr.getDate() - curr.getDay() + 1;
+  const last = first + 7;
+  const firstdayOfWeek = new Date(curr.setDate(first));
+  const lastdayOfWeek = new Date(curr.setDate(last));
+  const oneDayInMilSec =
+  Date.parse(new Date("2020-09-28")) - Date.parse(new Date("2020-09-27"));
+  const getBookingsForWeeks = (roomId, period) => {
+    switch (period) {
+      case "today":
+        var currentBooking = bookings
+          .filter((room) => room.roomId === roomId)
+          .filter(
+            ({ startTime, endTime }) =>
+              (Date.parse(startTime) >= Date.parse(today) &&
+                Date.parse(startTime) <= Date.parse(today) + oneDayInMilSec) |
+              (Date.parse(startTime) <= Date.parse(today) &&
+                Date.parse(endTime) >= Date.parse(today) + oneDayInMilSec)
+          );
+        break;
+      case "thisweek":
+        currentBooking = bookings
+          .filter((room) => room.roomId === roomId)
+          .filter(
+            ({ startTime, endTime }) =>
+              (Date.parse(startTime) >= Date.parse(firstdayOfWeek) &&
+                Date.parse(startTime) <= Date.parse(lastdayOfWeek)) |
+              (Date.parse(startTime) <= Date.parse(firstdayOfWeek) &&
+                Date.parse(endTime) >= Date.parse(lastdayOfWeek))
+          );
+        break;
+      case "nextweek":
+        currentBooking = bookings
+          .filter((room) => room.roomId === roomId)
+          .filter(
+            ({ startTime, endTime }) =>
+              Date.parse(startTime) >= Date.parse(lastdayOfWeek) &&
+              (Date.parse(startTime) <=
+                Date.parse(lastdayOfWeek + oneDayInMilSec * 7)) |
+                (Date.parse(startTime) <= Date.parse(lastdayOfWeek)) &&
+              Date.parse(endTime) >=
+                Date.parse(lastdayOfWeek + oneDayInMilSec * 7)
+          );
+        break;
+      case "all":
+        currentBooking = bookings;
+        break;
+      default:
+        currentBooking = [];
+    }
+    return currentBooking;
+  };
   const pushValue = (event) => {
     const { name, value } = event.target;
     setArg({ ...arg, [name]: value });
   };
-
-  const submitOnClick = (event) => {
-    const getBookingsForWeek = (roomId, weekNo) => {
-      const setToday = Date.parse("2019-09-28 00:00:00");
-      const oneDayInMilSec = Date.parse("2019-09-29 00:00:00") - setToday;
-  
-      switch (weekNo) {
-        case "today":
-          var currentBooking = props.BookingData.filter(
-            (room) => room.roomId === roomId
-          ).filter(
-            (time) =>
-              (Date.parse(time.startTime) >= setToday) &
-              (Date.parse(time.startTime) <= setToday + oneDayInMilSec)
-          );
-          break;
-        case "thisweek":
-          currentBooking = props.BookingData.filter(
-            (room) => room.roomId === roomId
-          ).filter(
-            (time) =>
-              (Date.parse(time.startTime) >= setToday) &
-              (Date.parse(time.startTime) <= setToday + oneDayInMilSec * 7)
-          );
-          break;
-        case "nextweek":
-          currentBooking = props.BookingData.filter(
-            (room) => room.roomId === roomId
-          ).filter(
-            (time) =>
-              (Date.parse(time.startTime) >= setToday * 7) &
-              (Date.parse(time.startTime) <= setToday + oneDayInMilSec * 14)
-          );
-          break;
-        default:
-          currentBooking = "No value found";
-      }
-      setBookings(currentBooking)
-      
-    };
-    getBookingsForWeek(arg.roomId, arg.period)
-
-    event.preventDefault();
-  };
-
+  const filteredBookings = getBookingsForWeeks(arg.roomId, arg.period);
   return (
     <div className="container">
       <h1>CURRENT BOOKINGS</h1>
-      <form onSubmit={submitOnClick}>
+      <form>
         <div className="dropdown-group">
           <div className="dropdown">
             <h2>SELECT ROOM</h2>
@@ -77,7 +83,6 @@ const GetBookingsForWeek = (props) => {
               <option value="Auditorium">Auditorium</option>
             </select>
           </div>
-
           <div className="dropdown">
             <h2>SELECT PERIOD</h2>
 
@@ -94,37 +99,33 @@ const GetBookingsForWeek = (props) => {
             </select>
           </div>
           <br></br>
-          <input
-            className="submit"
-            type="submit"
-          ></input>
         </div>
       </form>
-
-      {bookings != null ? (
+      {filteredBookings.length !== 0 ? (
         <div className="table">
           <table>
-          {bookings !== '' ?
-            <tr>
-              <th>Title</th>
-              <th>Start Time</th>
-              <th>End Time</th>
-            </tr>
-            : null }
-            
-
-            {bookings.map((map) => (
+            {filteredBookings.length !== 0 ? (
+              <thead>
+              <tr>
+                <th>Title</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+              </tr>
+              </thead>
+            ) : null}
+              <tbody>
+            {filteredBookings.map((map) => (
               <tr key={map.id}>
                 <td>{map.title}</td>
                 <td>{map.startTime}</td>
                 <td>{map.endTime}</td>
               </tr>
             ))}
+            </tbody>
           </table>
         </div>
       ) : null}
     </div>
   );
 };
-
 export default GetBookingsForWeek;
