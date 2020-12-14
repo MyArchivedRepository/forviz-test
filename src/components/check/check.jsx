@@ -10,13 +10,13 @@ const CheckAvailability = (props) => {
   const pushValue = (event) => {
     const { name, value } = event.target;
     setArg({ ...arg, [name]: value });
-    checkAvailability(arg.roomId, arg.startTime, arg.endTime);
+    checkIsBooked (arg.roomId, arg.startTime, arg.endTime);
   };
   const changeDate = (event) => {
     const { name, value } = event.target;
     setArg({ ...arg, [name]: value });
   };
-  const checkAvailability = (roomId, inputStartTime, inputEndTime) => {
+  const checkIsBooked = (roomId, inputStartTime, inputEndTime) => {
     const newStartTimeForCheck = Date.parse(inputStartTime);
     const newEndTimeForCheck = Date.parse(inputEndTime);
     const forCheck = props.BookingData.filter(
