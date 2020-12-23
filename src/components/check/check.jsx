@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./check-styles.css";
-const CheckAvailability = (props) => {
+const CheckAvailability = ({BookingData}) => {
   const [arg, setArg] = useState({
     roomId: "",
     startTime: "",
@@ -16,14 +16,15 @@ const CheckAvailability = (props) => {
   const changeDate = (event) => {
     const { name, value } = event.target;
     setArg({ ...arg, [name]: value });
-    checkIsBooked (arg.roomId, arg.startTime, arg.endTime);
+ 
+    ;
 
   };
-  const checkIsBooked = (roomId, inputStartTime, inputEndTime) => {
-    const newStartTimeForCheck = Date.parse(inputStartTime);
-    const newEndTimeForCheck = Date.parse(inputEndTime);
-    const forCheck = props.BookingData.filter(
-      (room) => room.roomId === roomId
+
+    const newStartTimeForCheck = Date.parse(arg.startTime);
+    const newEndTimeForCheck = Date.parse(arg.endTime);
+    const forCheck = BookingData.filter(
+      (room) => room.roomId === arg.roomId
     ).filter((time) =>       
     (Date.parse(time.startTime) <= newStartTimeForCheck &&
       Date.parse(time.endTime) > newStartTimeForCheck) |
@@ -32,10 +33,7 @@ const CheckAvailability = (props) => {
     (Date.parse(time.startTime) >= newStartTimeForCheck &&
       Date.parse(time.endTime) < newEndTimeForCheck)      
 )
-    console.log(forCheck)
-    setIsBooked(forCheck.length !== 0);
-    return forCheck.length !== 0;
-  };
+    ;
   const newStartTime = new Date(arg.startTime).toLocaleString();
   const newEndTime = new Date(arg.endTime).toLocaleString();
   return (
@@ -100,7 +98,7 @@ const CheckAvailability = (props) => {
           </tbody>
         </table>
       </div>
-      {arg.endTime === "" ? null : isBooked === true ? (
+      {arg.endTime === "" ? null : forCheck.length !== 0 ? (
         <h1 className="booked">Booked!</h1>
       ) : Date.parse(arg.startTime) >= Date.parse(arg.endTime) || Date.parse(arg.startTime) < Date.parse(new Date("2020-09-28")) ? (
         <h1 className="warn">Please choose the correct time</h1>
