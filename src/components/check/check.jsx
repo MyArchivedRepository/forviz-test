@@ -7,30 +7,32 @@ const CheckAvailability = (props) => {
     endTime: "",
   });
   const [isBooked, setIsBooked] = useState(null);
-  const pushValue = (event) => {
-    const { name, value } = event.target;
-    setArg({ ...arg, [name]: value });
-    checkIsBooked (arg.roomId, arg.startTime, arg.endTime);
-  };
+  // const pushValue = (event) => {
+  //   const { name, value } = event.target;
+  //   setArg( ()=> {return { ...arg, [name]: value }} );  
+  //   checkIsBooked (arg.roomId, arg.startTime, arg.endTime);
+
+  // };
   const changeDate = (event) => {
     const { name, value } = event.target;
     setArg({ ...arg, [name]: value });
+    checkIsBooked (arg.roomId, arg.startTime, arg.endTime);
+
   };
   const checkIsBooked = (roomId, inputStartTime, inputEndTime) => {
     const newStartTimeForCheck = Date.parse(inputStartTime);
     const newEndTimeForCheck = Date.parse(inputEndTime);
     const forCheck = props.BookingData.filter(
       (room) => room.roomId === roomId
-    ).filter((time) => {
-      return (
-        (Date.parse(time.startTime) <= newStartTimeForCheck &&
-          Date.parse(time.endTime) > newStartTimeForCheck) |
-        (Date.parse(time.startTime) < newEndTimeForCheck &&
-          Date.parse(time.endTime) > newEndTimeForCheck) |
-        (Date.parse(time.startTime) >= newStartTimeForCheck &&
-          Date.parse(time.endTime) < newEndTimeForCheck)
-      );
-    });
+    ).filter((time) =>       
+    (Date.parse(time.startTime) <= newStartTimeForCheck &&
+      Date.parse(time.endTime) > newStartTimeForCheck) |
+    (Date.parse(time.startTime) < newEndTimeForCheck &&
+      Date.parse(time.endTime) > newEndTimeForCheck) |
+    (Date.parse(time.startTime) >= newStartTimeForCheck &&
+      Date.parse(time.endTime) < newEndTimeForCheck)      
+)
+    console.log(forCheck)
     setIsBooked(forCheck.length !== 0);
     return forCheck.length !== 0;
   };
@@ -46,7 +48,7 @@ const CheckAvailability = (props) => {
             <select
               className="select"
               name="roomId"
-              onChange={pushValue}
+              onChange={changeDate}
               required
             >
               <option></option>
@@ -76,6 +78,7 @@ const CheckAvailability = (props) => {
             onChange={changeDate}
             required
           />
+
           <br></br>
         </div>
       </form>
@@ -99,7 +102,7 @@ const CheckAvailability = (props) => {
       </div>
       {arg.endTime === "" ? null : isBooked === true ? (
         <h1 className="booked">Booked!</h1>
-      ) : Date.parse(arg.startTime) >= Date.parse(arg.endTime) ? (
+      ) : Date.parse(arg.startTime) >= Date.parse(arg.endTime) || Date.parse(arg.startTime) < Date.parse(new Date("2020-09-28")) ? (
         <h1 className="warn">Please choose the correct time</h1>
       ) : arg.roomId === "" ? (
         <h1 className="warn">Please select room</h1>
